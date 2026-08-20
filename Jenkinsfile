@@ -1,23 +1,33 @@
 pipeline {
     agent any
 
+    environment {
+        APP_VERSION = '1.0'
+        APP_NAME    = 'MyApp'
+        DOCKER_REPO = 'MyDockerRepo'
+    }
+
     stages {
         stage('Build') {
             steps {
-                sh 'echo "This is build stage" > app.txt'
                 echo 'Build'
+                sh 'echo "This is build stage" > app.txt'
+                sh 'echo $APP_NAME $APP_VERSION $DOCKER_REPO'
             }
         }
         stage('Test') {
             steps {
-                sh 'ls app.txt'
                 echo 'Test'
+                sh 'ls app.txt'
+                sh 'echo "Pipeline Name: $JOB_NAME, Build Number: $BUILD_NUMBER"'
+
             }
         }
         stage('Deploy') {
             steps {
-                sh 'mkdir -p deploy && mv app.txt deploy'
                 echo 'Deploy'
+                sh 'mkdir -p deploy && mv app.txt deploy'
+                
             }
         }
     }
