@@ -18,4 +18,11 @@ pipeline {
             }
         }
     }
+    
+    post {
+        always {
+            echo 'Delete Workspace'
+            deleteDir()
+        }
+    }
 }
